@@ -34,7 +34,12 @@ public class EmployeeController {
     }
     @PostMapping("/employees")
     public Employee createEmployee(@RequestBody EmployeeRequest employeeRequest) {
-        return employeeService.addEmployee(employeeRequest);
+        try {
+            return employeeService.addEmployee(employeeRequest);
+        } catch (IllegalArgumentException e) {
+            System.out.println(e);
+        }
+        return null;
     }
     @GetMapping("/employee/salary/sum")
     public int sum() {

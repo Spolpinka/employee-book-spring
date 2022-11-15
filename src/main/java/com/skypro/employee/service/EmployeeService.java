@@ -2,6 +2,7 @@ package com.skypro.employee.service;
 
 import com.skypro.employee.model.Employee;
 import com.skypro.employee.record.EmployeeRequest;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Service;
 
 import java.util.*;
@@ -15,8 +16,8 @@ public class EmployeeService {
     }
 
     public Employee addEmployee(EmployeeRequest employeeRequest) {
-        if (employeeRequest.getFirstName() == null || employeeRequest.getLastName() == null) {
-            throw new IllegalArgumentException("name should be set");
+        if (!StringUtils.isAlpha(employeeRequest.getFirstName()) || !StringUtils.isAlpha(employeeRequest.getLastName())) {
+            throw new IllegalArgumentException("400 Bad Request");
         }
         Employee employee = new Employee(employeeRequest.getFirstName(), employeeRequest.getLastName(),
                 employeeRequest.getDepartment(), employeeRequest.getSalary());
@@ -26,9 +27,9 @@ public class EmployeeService {
 
     public int sum() {
         int sum = 0;
-        for (Map.Entry<Integer, Employee> entry :
-                employees.entrySet()) {
-            sum += entry.getValue().getSalary();
+        for (Employee e :
+                employees.values()) {
+            sum += e.getSalary();
         }
         return sum;
     }
@@ -71,12 +72,12 @@ public class EmployeeService {
         return employeeList;
     }
 
-    public float mediumSalary() {
+    private float mediumSalary() {
         int sum = 0;
         for (Map.Entry<Integer, Employee> entry:
                 employees.entrySet()) {
             sum += entry.getValue().getSalary();
         }
-        return sum / employees.size();
+        return (float) (sum / employees.size());
     }
 }
