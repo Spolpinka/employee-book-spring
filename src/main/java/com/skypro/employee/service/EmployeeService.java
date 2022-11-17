@@ -1,5 +1,6 @@
 package com.skypro.employee.service;
 
+import com.skypro.employee.exceptions.InvalidInputException;
 import com.skypro.employee.model.Employee;
 import com.skypro.employee.record.EmployeeRequest;
 import org.apache.commons.lang3.StringUtils;
@@ -17,7 +18,7 @@ public class EmployeeService {
 
     public Employee addEmployee(EmployeeRequest employeeRequest) {
         if (!StringUtils.isAlpha(employeeRequest.getFirstName()) || !StringUtils.isAlpha(employeeRequest.getLastName())) {
-            throw new IllegalArgumentException("400 Bad Request");
+            throw new InvalidInputException("400 Bad Request");
         }
         Employee employee = new Employee(employeeRequest.getFirstName(), employeeRequest.getLastName(),
                 employeeRequest.getDepartment(), employeeRequest.getSalary());

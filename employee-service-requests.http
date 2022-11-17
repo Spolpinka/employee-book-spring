@@ -28,7 +28,7 @@ Content-Type: application/json
 
 {
   "firstName": "виталик",
-  "lastName": "",
+  "lastName": "   ",
   "department": 1,
   "salary": 65465
 }
